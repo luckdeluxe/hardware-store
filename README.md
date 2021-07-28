@@ -1,6 +1,6 @@
-# Petgram
+# Store
 
-_Acceso Gaming [Store]_
+_Hardware [Store]_
 
 ## Starting 🚀
 
