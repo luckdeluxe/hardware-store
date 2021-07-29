@@ -35,6 +35,16 @@ sorce .venv/bin/activate
 
 _What things do you need to install the software and how to install them_
 
+_You can install the requirements.txt file recursively_
+```
+pip install requirements.txt
+```
+_If you have any errors in the above way you can install it manually_
+
+```
+pip install [dependency==version]
+```
+
 ```
 asgiref==3.4.1
 astroid==2.6.2
