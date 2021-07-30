@@ -16,7 +16,7 @@ _A series of step-by-step examples that tells you what to run to get a developme
 _Clone the repository_
 
 ```
-git clone git@github.com:luckdeluxe/Petgram.git && cd Petgram
+git clone https://github.com/luckdeluxe/hardware-store.git && cd store
 ```
 
 _Create a virtual Python environment:_
@@ -31,16 +31,19 @@ _Activate the virtual environment_
 sorce .venv/bin/activate
 ```
 
-_Create database from models_
-
-```
-python3 manage.py makemigrations
-python3 manage.py migrate
-```
-
 ### Installation 🔧
 
 _What things do you need to install the software and how to install them_
+
+_You can install the requirements.txt file recursively_
+```
+pip install requirements.txt
+```
+_If you have any errors in the above way you can install it manually_
+
+```
+pip install [dependency==version]
+```
 
 ```
 asgiref==3.4.1
@@ -61,6 +64,13 @@ wrapt==1.12.1
 ```
 
 ## Running the tests ⚙️
+
+_Create database from models_
+
+```
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
 
 ```
 python3 manage.py runserver
