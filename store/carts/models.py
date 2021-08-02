@@ -1,7 +1,7 @@
 import uuid, decimal
 from django.db.models.signals import post_save, pre_save, m2m_changed
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import User
 from django.db.models.fields import DecimalField
 from products.models import Product
 
