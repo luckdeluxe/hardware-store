@@ -21,3 +21,7 @@ def get_or_create_cart(request):
     request.session['cart_id'] = cart.cart_id #Agregamos al dict session el cart_id que acabamos de crear en la instancia ' cart'
 
     return cart
+
+def destroy_cart(request):
+    request.session['cart_id'] = None
+    
