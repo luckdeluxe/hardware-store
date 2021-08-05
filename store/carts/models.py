@@ -4,7 +4,7 @@ from django.db import models
 from users.models import User
 from django.db.models.fields import DecimalField
 from products.models import Product
-
+from orders.common import OrderStatus
 class Cart(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, through='CartProducts')
@@ -41,7 +41,7 @@ class Cart(models.Model):
 
     @property
     def order(self):
-        return self.order_set.first()
+        return self.order_set.filter(status=OrderStatus.CREATED).first()
 
 class CartProductsManager(models.Manager):
     def create_or_update_quantity(self, cart, product, quantity=1):
