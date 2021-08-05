@@ -1,22 +1,10 @@
 import uuid
-from enum import Enum
 from django.db import models
 from users.models import User
 from carts.models import Cart
 from shipping_addresses.models import ShippingAddress
 from django.db.models.signals import pre_save
-
-#Creamos una clase Order con un atributo 'status' al cual le pasamos el parametro choices
-#Que es una lista de tuplas que itera la clase OrderStatus que hereda de la clase Enum(sirve para crear constantes enumeradas)
-
-class OrderStatus(Enum):
-    CREATED = 'CREATED'
-    PAYED = 'PAYED'
-    COMPLETED = 'COMPLETED'
-    CANCELED = 'CANCELED'
-
-choices = [ (tag, tag.value) for tag in OrderStatus ]
-
+from orders.common import OrderStatus, choices
 
 class Order(models.Model):
     order_id = models.CharField(max_length=100, blank=False, null=False, unique=True)
@@ -47,7 +35,6 @@ class Order(models.Model):
         self.shipping_address = shipping_address
         self.save()
 
-
     def update_total(self):
         self.total = self.get_total()
         self.save()
@@ -57,6 +44,10 @@ class Order(models.Model):
 
     def cancel(self):
         self.status = OrderStatus.CANCELED
+        self.save()
+
+    def complete(self):
+        self.status = OrderStatus.COMPLETED
         self.save()
 
     
