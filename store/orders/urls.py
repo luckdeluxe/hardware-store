@@ -1,5 +1,5 @@
 from django.urls import path
-from orders.views import address, cancel, check_address, confirm, order, select_address
+from orders.views import OrderListView, address, cancel, check_address, confirm, order, select_address, complete
 
 app_name = 'orders'
 
@@ -10,4 +10,6 @@ urlpatterns = [
     path('check/address/<int:pk>', check_address, name='check_address'),
     path('confirm', confirm, name='confirm'),
     path('cancel', cancel, name='cancel'),
+    path('complete', complete, name='complete'),
+    path('completed', OrderListView.as_view(), name='completed'),
 ]
