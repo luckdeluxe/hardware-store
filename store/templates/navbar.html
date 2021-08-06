@@ -3,6 +3,7 @@
 {% url 'carts:cart' as cart %}
 {% url 'shipping_addresses:shipping_addresses' as addresses %}
 {% url 'orders:completed' as order %}
+{% url 'billing_profiles:billing_profiles' as billing_profiles %}
 
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -31,6 +32,11 @@
             <li class="nav-item {% if request.path == addresses %}active{% endif %}">
                 <a href="{{addresses}}" class="nav-link">
                 <span class="fas fa-address-book"></span>
+                </a>
+            </li>
+            <li class="nav-item {% if request.path == billing_profiles %}active{% endif %}">
+                <a href="{{billing_profiles}}" class="nav-link">
+                <span class="fab fa-cc-stripe"></span>
                 </a>
             </li>
             {% endif %}
