@@ -1,3 +1,4 @@
+from billing_profiles.models import BillingProfile
 import uuid
 from django.db import models
 from users.models import User
@@ -16,11 +17,23 @@ class Order(models.Model):
     shipping_address = models.ForeignKey(ShippingAddress, null=True, blank=True, on_delete=models.CASCADE)
     status = models.CharField(max_length=30, choices=choices,
                              default=OrderStatus.CREATED)
-
+    billing_profile = models.ForeignKey(BillingProfile, null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.order_id
     
+    def get_or_set_billing_profile(self):
+        if self.billing_profile:
+            return self.billing_profile
+
+        billing_profile = self.user.billing_profile
+        if billing_profile:
+            self.update_billing_profile(billing_profile)
+
+    def update_billing_profile(self, billing_profile):
+        self.billing_profile = billing_profile
+        self.save()
+
     def get_or_set_shipping_address(self):
         if self.shipping_address:
             return self.shipping_address
