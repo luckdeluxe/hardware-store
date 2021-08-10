@@ -1,3 +1,4 @@
+from charges.models import Charges
 from django.contrib import messages
 from django.db.models.query import EmptyQuerySet
 from django.shortcuts import get_object_or_404, redirect, render
@@ -10,6 +11,7 @@ from orders.mails import Mail
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from orders.decorators import validate_cart_and_order
+from django.db import transaction
 import threading
 
 class OrderListView(LoginRequiredMixin, ListView):
@@ -120,16 +122,20 @@ def complete(request, cart, order):
     if request.user.id != order.user_id:
         return redirect('carts:cart')
 
-    order.complete()
-    thread = threading.Thread(target=Mail.send_complete_order, args=(
-        order,
-        request.user
-    ))
-    thread.start()
+    charge = Charges.objects.create_charge(order)
 
-    destroy_cart(request)
-    destroy_order(request)
+    if charge:
+        with transaction.atomic():
+            order.complete()
+            
+            thread = threading.Thread(target=Mail.send_complete_order, args=(
+                order,
+                request.user
+            ))
+            thread.start()
 
-    messages.success(request, 'Compra completada exitosamente')
+            destroy_cart(request)
+            destroy_order(request)
+
+            messages.success(request, 'Compra completada exitosamente')
     return redirect('index')
-
