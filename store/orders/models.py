@@ -55,6 +55,12 @@ class Order(models.Model):
     def get_total(self):
         return self.cart.total + self.shipping_total
 
+    @property
+    def description(self):
+        return 'Compra por ({}) productos'.format(
+            self.cart.products.count()
+        )
+
     def cancel(self):
         self.status = OrderStatus.CANCELED
         self.save()
