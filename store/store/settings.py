@@ -22,6 +22,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     #LOCAL APPS
+    'charges',
     'billing_profiles',
     'orders',
     'users',
